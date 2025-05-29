@@ -37,8 +37,11 @@ class Fighter_Jet:
     def center_fighter_jet(self):
         #将战斗机放至屏幕底部中央
         #随后重置用于跟踪战斗机确切位置的self.x
+
         self.rect.midbottom = self.screen_rect.midbottom
         self.x = float(self.rect.x)
+        #我靠！！你原来缺了这个！，我就说怎么每次都跑屏幕中间
+        self.y = float(self.rect.y)
         
     def blit_me(self):
         #在指定位置（？）（self.rect）绘制战斗机图像
@@ -49,7 +52,7 @@ class Fighter_Jet:
             self.x += self.settings.fighter_jet_speed
         elif self.moving_left and self.rect.left > 0:
             self.x -= self.settings.fighter_jet_speed
-        elif self.moving_up and self.rect.y > (self.screen_height)/2:
+        elif self.moving_up and self.rect.y > 0:
             self.y -= self.settings.fighter_jet_speed
         elif self.moving_down and self.rect.y < (self.screen_height - (self.height)):
             self.y += self.settings.fighter_jet_speed
@@ -58,5 +61,5 @@ class Fighter_Jet:
         self.rect.x = self.x
         self.rect.y = self.y
             
-            
+#        print(self.screen_rect.midbottom,self.rect.midbottom,self.x)    
             

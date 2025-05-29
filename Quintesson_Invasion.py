@@ -53,7 +53,7 @@ class QuintessonInvasion:
         
         
         #判断游戏结束条件
-        self.game_active = True
+        self.game_active = False
         
         
         
@@ -68,7 +68,6 @@ class QuintessonInvasion:
                 self.fighter_jet.update()
                 self._update_bullet()
                 self._update_quintessons()
-            
             self._update_screen()
             #维持稳定帧率             #pygame会尽可能确保此循环每秒运行（60）次
             self.clock.tick(60)
@@ -107,7 +106,7 @@ class QuintessonInvasion:
             #向左移动——self.settings.fighter_jet_speed
             self.fighter_jet.x -= self.settings.fighter_jet_speed
             self.fighter_jet.moving_left = True               
-        elif event.key == pygame.K_UP and self.fighter_jet.y > (self.settings.screen_height)/2:
+        elif event.key == pygame.K_UP and self.fighter_jet.y > 0:
             #向上移动——self.settings.fighter_jet_speed
             self.fighter_jet.y -= self.settings.fighter_jet_speed
             self.fighter_jet.moving_up = True
@@ -161,19 +160,20 @@ class QuintessonInvasion:
     #当前五面怪舰队被消灭干净后生成一队新的五面怪舰队
         if not self.quintessons:
             #删除现有的子弹并创建一个新的五面怪舰队
-            
             self.bullets.empty()
             self._creat_fleet()
             
        
     #更新五面怪位置
     def _update_quintessons(self):
+
         if self.settings.switch_horizonal_movement:
             self._check_fleet_edges()
             self.quintessons.update()
         else:
             for quintesson in self.quintessons.sprites():
                 quintesson.rect.y += self.settings.fleet_drop_speed
+
         #Spritecollideany()函数接受两个实参，一个精灵和一个编组。
         #它检查编组中是否有成员与精灵发生碰撞，并在找到与精灵碰撞的成员后停止遍历编组
         #在这里，它遍历五面怪编组，并返回第一个与战斗机发生碰撞的五面怪
@@ -224,7 +224,7 @@ class QuintessonInvasion:
     
     def _check_quintessons_hit_bottom(self):
         #检查是否有五面怪到达屏幕底端
-        for quintesson in quintessons.sprites():
+        for quintesson in self.quintessons.sprites():
             if quintesson.rect.bottom >= self.settings.screen_height:
             #像战斗机被撞到一样处理
                 self._fighter_jet_hit()
@@ -239,7 +239,7 @@ class QuintessonInvasion:
     
     def _fighter_jet_hit(self):
         #响应战斗机和五面怪之间的碰撞
-        if self.fighter_jet_left > 0:
+        if self.stats.fighter_jet_left > 0:
             #扣一滴血/少一只战斗机
             self.stats.fighter_jet_left -= 1
             
@@ -253,7 +253,7 @@ class QuintessonInvasion:
             
             #暂停一小会儿，让玩家能够看到自己撞五面怪了
             #接下来再顺次序执行下面的update_screen，将新的五面怪舰队绘制在屏幕上
-            sleep(0.5)
+            sleep(2)
     
         else:
             self.game_active = False

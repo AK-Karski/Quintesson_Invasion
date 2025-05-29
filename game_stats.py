@@ -4,7 +4,7 @@ import pygame
 
 class GameStats:
     
-    def __init__(self.QI_game):
+    def __init__(self,QI_game):
     #初始化统计信息
         self.settings = QI_game.settings
         self.reset_stats()
@@ -13,5 +13,6 @@ class GameStats:
         #初始化游戏运行期间可能会变化的统计信息
         
         #玩家剩余拥有的战斗机数量       玩家初始拥有的战斗机数量（几条命）
-        fighter_jet_left = self.settings.fighter_jet_limit
+        #不知道为什么实际的play次数永远会多一次出来，所以这里暂时打上补丁（*-1）
+        self.fighter_jet_left = self.settings.fighter_jet_limit - 1
         

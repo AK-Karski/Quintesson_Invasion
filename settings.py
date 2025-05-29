@@ -18,6 +18,8 @@ class Settings:
         self.bg_color = (0,0,0)
             #战斗机的速度
         self.fighter_jet_speed = 1.5
+            #玩家初始拥有几只战斗机（几条命）
+        self.fighter_jet_limit = 2
             #子弹的速度！
         self.bullet_speed = 2.0
         
@@ -30,8 +32,6 @@ class Settings:
             #fleet_direction  = 1时表示向右移动（也正应着向右x值增大）
             #fleet_direction = -1时表示向左移动（也正应着向左x值减少）
         self.fleet_direction = 1
-            #玩家初始拥有几只战斗机（几条命）
-        self.fighter_jet_limit = 2
 
    #试做：开关们~
         #五面怪们要不要水平方向移动
