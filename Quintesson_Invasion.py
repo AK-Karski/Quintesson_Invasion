@@ -9,7 +9,7 @@ from fighter_jet import Fighter_Jet
 from bullet import Bullet
 from quintesson import Quintesson
 from game_stats import GameStats
-
+from button import Button
 
 class QuintessonInvasion:
         
@@ -55,6 +55,8 @@ class QuintessonInvasion:
         #判断游戏结束条件
         self.game_active = False
         
+        #创建堂堂~play按钮！
+        self.play_button = Button(self,"~PLAY~")
         
         
         #游戏总控
@@ -85,7 +87,12 @@ class QuintessonInvasion:
             #事件为--点击窗口上的quit键   或   按下Q键
             if event.type == pygame.QUIT or event.type == pygame.K_q:
                 sys.exit()
-                
+            
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+                #get_pos方法返回一个元组，包含鼠标点击时光标的x，y坐标
+                self._check_play_button(mouse_pos)
+            
             #用户按一次键盘上的按键——会在pygame中产生一个KEYDOWN事件
             #事件为--按下键盘按键
             elif event.type == pygame.KEYDOWN:
@@ -95,7 +102,27 @@ class QuintessonInvasion:
             #事件为-放开键盘按键
             elif event.type == pygame.KEYUP:
                 self._check_keyup_events(event)
-                                
+
+    def _check_play_button(self,mouse_pos):
+        #在玩家单击play按钮时开始新游戏
+        button_clicked = self.play_button.rect.collidepoint(mouse_pos)
+        if button_clicked and not self.game_active:
+            #重置游戏的统计信息
+            self.stats.reset_stats()            
+            self.game_active = True
+            
+            #清空子弹列表和五面怪列表
+            self.bullets.empty()
+            self.quintessons.empty()
+            
+            #创建新五面怪舰队并将战斗机放至屏幕底部中央
+            self._creat_fleet()
+            self.fighter_jet.center_fighter_jet()
+            
+            #令鼠标光标不可见
+            pygame.mouse.set_visible(False)
+
+    
     #管理keydown事件               
     def _check_keydown_events(self,event):
         if event.key == pygame.K_RIGHT and self.fighter_jet.rect.right < self.settings.screen_width:
@@ -256,7 +283,9 @@ class QuintessonInvasion:
             sleep(2)
     
         else:
+            #结束游戏并重新将鼠标光标可视化
             self.game_active = False
+            pygame.mouse.set_visible(True)
     
 
 
@@ -273,6 +302,12 @@ class QuintessonInvasion:
             
             #绘制五面怪
             self.quintessons.draw(self.screen)
+            
+            #绘制开始按钮
+            #为了要让play按钮显示在屏幕所有元素之上
+            #要在绘制完其他所有元素之后再绘制这个按钮
+            if not self.game_active:
+                self.play_button.draw_button()
             
             #让最近绘制的屏幕可见（即实时更新屏幕）
             pygame.display.flip()
