@@ -10,6 +10,7 @@ from bullet import Bullet
 from quintesson import Quintesson
 from game_stats import GameStats
 from button import Button
+from scoreboard import Scoreboard
 
 class QuintessonInvasion:
         
@@ -38,8 +39,11 @@ class QuintessonInvasion:
         pygame.display.set_caption("五面怪入侵~博派飞行小队の大突围desu~")
         
         
-        #创建你的用于存储游戏统计信息的实例】
+        #创建你的用于存储游戏统计信息的实例~
         self.stats = GameStats(self)
+        
+        #创建你的记分牌~
+        self.scoreboard = Scoreboard(self)
         
         #创建你的主角战斗机~
         self.fighter_jet = Fighter_Jet(self)
@@ -107,6 +111,8 @@ class QuintessonInvasion:
         #在玩家单击play按钮时开始新游戏
         button_clicked = self.play_button.rect.collidepoint(mouse_pos)
         if button_clicked and not self.game_active:
+            #重置游戏的动态设置
+            self.settings.initialize_dynamic_settings()
             #重置游戏的统计信息
             self.stats.reset_stats()            
             self.game_active = True
@@ -184,12 +190,21 @@ class QuintessonInvasion:
         #两个值为True的实参告诉pygame在发生碰撞时删除对应的子弹和五面怪
         #（*若要模拟能够穿透五面怪的高能子弹，可将第一个True改为False，这样被击中的五面怪消失而子弹始终有效
     
+        if collisions:
+            #确保每个被击落的五面怪都记入分数
+            #防止出现比如一颗子弹击中两个五面怪
+            for quintessons in  collisions.values():
+                #将碰撞列表中被打中的五面怪记入得分
+                self.stats.score += self.settings.quintesson_points
+            self.scoreboard.pre_score()
+    
+    
     #当前五面怪舰队被消灭干净后生成一队新的五面怪舰队
         if not self.quintessons:
             #删除现有的子弹并创建一个新的五面怪舰队
             self.bullets.empty()
             self._creat_fleet()
-            
+            self.settings.increase_speed()
        
     #更新五面怪位置
     def _update_quintessons(self):
@@ -302,6 +317,9 @@ class QuintessonInvasion:
             
             #绘制五面怪
             self.quintessons.draw(self.screen)
+            
+            #绘制记分牌
+            self.scoreboard.show_score()
             
             #绘制开始按钮
             #为了要让play按钮显示在屏幕所有元素之上
