@@ -197,7 +197,7 @@ class QuintessonInvasion:
                 #将碰撞列表中被打中的五面怪记入得分
                 self.stats.score += self.settings.quintesson_points
             self.scoreboard.pre_score()
-    
+            self.scoreboard.check_highest_score()
     
     #当前五面怪舰队被消灭干净后生成一队新的五面怪舰队
         if not self.quintessons:

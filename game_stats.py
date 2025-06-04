@@ -9,6 +9,12 @@ class GameStats:
         self.settings = QI_game.settings
         self.reset_stats()
 
+    #在任何情况下都不应重置最高分
+        self.highest_score = 0
+        
+    
+    
+    
     
     def reset_stats(self):
         #初始化游戏运行期间可能会变化的统计信息
