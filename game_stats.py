@@ -11,10 +11,6 @@ class GameStats:
 
     #在任何情况下都不应重置最高分
         self.highest_score = 0
-        
-    
-    
-    
     
     def reset_stats(self):
         #初始化游戏运行期间可能会变化的统计信息
@@ -26,4 +22,7 @@ class GameStats:
         #初始化得分！因为分数在每次开始游戏时会重置，即为动态参数
         #所以放在rest_stats里
         self.score = 0
+        
+        #初始化等级
+        self.level = 0
         

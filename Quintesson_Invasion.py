@@ -117,6 +117,9 @@ class QuintessonInvasion:
             self.stats.reset_stats()            
             self.game_active = True
             
+            self.scoreboard.prep_score
+            self.scoreboard.prep_level
+            
             #清空子弹列表和五面怪列表
             self.bullets.empty()
             self.quintessons.empty()
@@ -196,7 +199,7 @@ class QuintessonInvasion:
             for quintessons in  collisions.values():
                 #将碰撞列表中被打中的五面怪记入得分
                 self.stats.score += self.settings.quintesson_points
-            self.scoreboard.pre_score()
+            self.scoreboard.prep_score()
             self.scoreboard.check_highest_score()
     
     #当前五面怪舰队被消灭干净后生成一队新的五面怪舰队
@@ -205,7 +208,10 @@ class QuintessonInvasion:
             self.bullets.empty()
             self._creat_fleet()
             self.settings.increase_speed()
-       
+            
+            #提高等级
+            self.stats.level += 1
+            self.scoreboard.prep_level()
     #更新五面怪位置
     def _update_quintessons(self):
 
@@ -284,6 +290,7 @@ class QuintessonInvasion:
         if self.stats.fighter_jet_left > 0:
             #扣一滴血/少一只战斗机
             self.stats.fighter_jet_left -= 1
+            self.scoreboard.prep_left_fighter_jet()
             
             #清空子弹列表和五面怪列表
             self.bullets.empty()

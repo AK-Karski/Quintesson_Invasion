@@ -1,12 +1,14 @@
 import pygame
+from pygame.sprite import Sprite
+
 #这里是堂堂~战斗机模块喔！！
 
-class Fighter_Jet:
+class Fighter_Jet(Sprite):
     
     def __init__(self,QI_game):
         
     #初始化F_QI_game并设置其初始位置
-        
+        super().__init__()
         #获取（游戏实例）屏幕大小并获取其外接矩形
         self.screen = QI_game.screen
         self.settings = QI_game.settings
@@ -63,3 +65,4 @@ class Fighter_Jet:
             
 #        print(self.screen_rect.midbottom,self.rect.midbottom,self.x)    
             
+    

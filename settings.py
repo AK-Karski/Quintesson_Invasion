@@ -32,6 +32,9 @@ class Settings:
             #1表示游戏节奏不变
         self.speedup_scale = 1.1
         
+            #随玩家提高等级，五面怪分数的提高速度
+        self.score_scale = 1.5
+        
             #初始化随游戏进行而变化的属性
         self.initialize_dynamic_settings()
         
@@ -60,7 +63,7 @@ class Settings:
         self.fleet_direction = 1
         
             #每击落一个五面怪所获得的分数
-        self.quitesson_points = 50
+        self.quintesson_points = 50
         
     
     def increase_speed(self):
@@ -68,7 +71,8 @@ class Settings:
         self.fighter_jet_speed *= self.speedup_scale
         self.quintesson_speed *= self.speedup_scale
         self.bullet_speed *= self.speedup_scale
-
+        
+        self.quintesson_points = int(self.quintesson_points * self.score_scale)
 
 
            #生成随机数以选择图像
