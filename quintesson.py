@@ -8,7 +8,7 @@ class Quintesson(Sprite):
         super().__init__()
         self.screen = QI_game.screen
         self.settings = QI_game.settings
-        self.image = pygame.image.load('images/alian_1.bmp')
+        self.image = pygame.image.load('images/enemies_image/alian_1.bmp')
         self.rect = self.image.get_rect()
         self.width = self.rect.width
         self.height = self.rect.height

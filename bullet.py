@@ -12,7 +12,7 @@ class Bullet(Sprite):
         super().__init__()
         self.screen = QI_game.screen
         self.settings = QI_game.settings
-        self.image = pygame.image.load('images/alian_1.bmp')
+        self.image = pygame.image.load('images/bullets_image/alian_1.bmp')
         self.width = self.image.get_width()
         self.height = self.image.get_height()
         '''#嗯...也可以直接做成图形样式

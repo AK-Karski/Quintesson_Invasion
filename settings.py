@@ -41,7 +41,7 @@ class Settings:
         
 
             #试做：开关们~
-                #五面怪们要不要水平方向移动
+                #五面怪们是否水平方向移动
         self.switch_horizonal_movement = True
 
 
@@ -79,11 +79,11 @@ class Settings:
     def generate_random_image(self,replace):
         random_number = randint(1,4)
         if random_number == 1:
-            replace.image = pygame.image.load('images/alian_1.bmp')
+            replace.image = pygame.image.load('images/enemies_image/alian_1.bmp')
         elif random_number == 2:
-            replace.image = pygame.image.load('images/alian_2.bmp')
+            replace.image = pygame.image.load('images/enemies_image/alian_2.bmp')
         elif random_number == 3:
-            replace.image = pygame.image.load('images/alian_3.bmp')
+            replace.image = pygame.image.load('images/enemies_image/alian_3.bmp')
 
  
         

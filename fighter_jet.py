@@ -18,7 +18,7 @@ class Fighter_Jet(Sprite):
         self.screen_height = QI_game.screen_height
     
         #加载战斗机图像并获取其外接矩形
-        self.image = pygame.image.load('images/jet_1.bmp')
+        self.image = pygame.image.load('images/jets_image/jet_1.bmp')
         self.rect = self.image.get_rect()
         self.width = self.image.get_width()
         self.height = self.image.get_height()
